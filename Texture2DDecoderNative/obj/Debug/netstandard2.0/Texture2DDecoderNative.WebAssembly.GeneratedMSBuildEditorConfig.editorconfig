@@ -1,0 +1,3 @@
+is_global = true
+build_property.RootNamespace = Texture2DDecoderNative.WebAssembly
+build_property.ProjectDir = /Users/canarypwn/Desktop/Kyaru/AssetStudio/Texture2DDecoderNative/

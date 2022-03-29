@@ -1,0 +1,197 @@
+name: Texture2DDecoderNative
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "Texture2DDecoderNative/**"
+      - '.github/workflows/build-decoder.yml'
+      - 'cmake/**'
+      - 'nuget/**'
+
+env:
+  # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
+  BUILD_TYPE: Release
+  PROJECT_NAME: Texture2DDecoderNative
+  ARCHS: x86, x64, arm64
+
+defaults:
+  run:
+    shell: pwsh
+
+jobs:
+  build-windows:
+    name: Build (Windows)
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Configure and Build
+        run: |
+          Import-Module (Join-Path '${{ github.workspace }}' cmake 'cmake-helper.psm1')
+          Invoke-CMakeNativeBatchBuild ${{ env.PROJECT_NAME }} ./build/windows -Architectures x86,x64,arm64
+
+      - name: Install
+        run: |
+          Import-Module (Join-Path '${{ github.workspace }}' cmake 'cmake-helper.psm1')
+          Invoke-CMakeNativeBatchInstall ./build/windows ./install/windows -Architectures x86,x64,arm64
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ env.PROJECT_NAME }}-${{ runner.os }}-${{ env.BUILD_TYPE }}
+          path: ${{ github.workspace }}/install/**
+
+  build-linux:
+    name: Build (Linux, Android)
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install multilib
+        if: runner.os == 'Linux'
+        run: |
+          sudo dpkg --add-architecture i386
+          sudo apt update
+          sudo apt install -yq gcc-multilib g++-multilib
+
+      - name: Install Ninja
+        run: |
+          sudo apt install -yq ninja-build
+
+      - name: Configure and Build
+        run: |
+          Import-Module (Join-Path '${{ github.workspace }}' cmake 'cmake-helper.psm1')
+          Invoke-CMakeNativeBatchBuild ${{ env.PROJECT_NAME }} ./build/linux -Architectures x86, x64
+          Invoke-CMakeAndroidBatchBuild ${{ env.PROJECT_NAME }} ./build/android -Generator Ninja -AndroidAbis armeabi-v7a, arm64-v8a, x86, x86_64 -NdkHome $env:ANDROID_NDK_LATEST_HOME -NdkToolchain
+
+      - name: Install
+        run: |
+          Import-Module (Join-Path '${{ github.workspace }}' cmake 'cmake-helper.psm1')
+          Invoke-CMakeNativeBatchInstall ./build/linux ./install/linux -Architectures x86, x64
+          Invoke-CMakeAndroidBatchInstall ./build/android ./install/android -AndroidAbis armeabi-v7a, arm64-v8a, x86, x86_64
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ env.PROJECT_NAME }}-${{ runner.os }}-${{ env.BUILD_TYPE }}
+          path: ${{ github.workspace }}/install/**
+
+  build-macos:
+    name: Build (MacOS, iOS, Catalyst)
+    runs-on: macos-latest
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: true
+
+      - name: Install Ninja
+        run: |
+          brew install ninja
+
+      - name: Configure and Build
+        run: |
+          Import-Module (Join-Path '${{ github.workspace }}' cmake 'cmake-helper.psm1')
+          Invoke-CMakeNativeBatchBuild ${{ env.PROJECT_NAME }} ./build/osx -Architectures x64,arm64
+          Invoke-CMakeAppleBatchBuild ${{ env.PROJECT_NAME }} ./build/apple -Platforms iOS -Generator Xcode -Framework -DENABLE_STRICT_TRY_COMPILE=1
+          Invoke-CMakeAppleBatchBuild ${{ env.PROJECT_NAME }} ./build/apple -Platforms MAC_CATALYST,MAC_CATALYST_ARM64 -Generator Ninja -DENABLE_STRICT_TRY_COMPILE=1 # -DENABLE_BITCODE=1 -DENABLE_ARC=1 -DENABLE_VISIBILITY=1
+
+      - name: Install
+        run: |
+          Import-Module (Join-Path '${{ github.workspace }}' cmake 'cmake-helper.psm1')
+          Invoke-CMakeNativeBatchInstall ./build/osx ./install/osx -Architectures x64,arm64
+          Invoke-CMakeAppleBatchInstall ./build/apple ./install/apple -Platforms iOS
+          Invoke-CMakeAppleBatchInstall ./build/apple ./install/apple -Platforms MAC_CATALYST,MAC_CATALYST_ARM64 -Merge catalyst
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ env.PROJECT_NAME }}-${{ runner.os }}-${{ env.BUILD_TYPE }}
+          path: ${{ github.workspace }}/install/**
+
+  build-wasm:
+    name: Build (WebAssembly)
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install Ninja
+        run: |
+          sudo apt install -yq ninja-build
+
+      - name: Checkout emsdk
+        uses: actions/checkout@v3
+        with:
+          repository: emscripten-core/emsdk
+          path: emsdk
+
+      - name: Install emsdk
+        run: |
+          pwsh ${{ github.workspace }}/cmake/setup-emsdk.ps1 -EmsdkPath ${{ github.workspace }}/emsdk
+
+      - name: Configure and Build
+        run: |
+          Import-Module (Join-Path '${{ github.workspace }}' cmake 'cmake-helper.psm1')
+          . ${{ github.workspace }}/emsdk/emsdk_env.ps1
+          Invoke-CMakeBuild ${{ env.PROJECT_NAME }} ./build/browser-wasm -Generator Ninja -Wasm -Static
+
+      - name: Install
+        run: |
+          Import-Module (Join-Path '${{ github.workspace }}' cmake 'cmake-helper.psm1')
+          Invoke-CMakeInstall ./build/browser-wasm ./install/browser-wasm
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ env.PROJECT_NAME }}-wasm-${{ env.BUILD_TYPE }}
+          path: ${{ github.workspace }}/install/**
+
+  publish:
+    name: Publish to GitHub Packages
+    runs-on: ubuntu-latest
+
+    needs: [build-windows, build-linux, build-macos, build-wasm]
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 6.0.x
+
+      - name: Authenticate with nuget
+        run: dotnet nuget add source --username KiruyaMomochi --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/KiruyaMomochi/index.json"
+
+      - name: Download all workflow run artifacts
+        uses: actions/download-artifact@v3
+
+      - name: Copy dlls to install
+        run: |
+          New-Item -ItemType Directory -Force ${{ github.workspace }}/install
+          Copy-Item -Recurse ${{ github.workspace }}/${{ env.PROJECT_NAME }}-*-${{ env.BUILD_TYPE }}/* ${{ github.workspace }}/install
+          Set-Location ${{ github.workspace }}
+          tree ${{ github.workspace }}/install
+          find . -type f -exec file '{}' ';'
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ env.PROJECT_NAME }}-${{ env.BUILD_TYPE }}
+          path: ${{ github.workspace }}/install/**
+
+      - name: Build nuget package
+        run: nuget/build.ps1 -OutputDir ${{ github.workspace }}/package
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ env.PROJECT_NAME }}-NuGet
+          path: "${{ github.workspace }}/package"
+
+      - name: Publish nuget package
+        run: Get-ChildItem '${{ github.workspace }}/package/*.nupkg' | Foreach-Object { dotnet nuget push $_ --api-key "${{ secrets.GITHUB_TOKEN }}" --source github --skip-duplicate }

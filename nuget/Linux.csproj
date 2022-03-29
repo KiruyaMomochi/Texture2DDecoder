@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">    
+    <ItemGroup>
+        <PackNativeLibrary Include="../install/linux-x64/lib/libTexture2DDecoderNative.so">
+            <Link>runtimes/linux-x64/native/libTexture2DDecoderNative.so</Link>
+        </PackNativeLibrary>
+        <PackNativeLibrary Include="../install/linux-x86/lib/libTexture2DDecoderNative.so">
+            <Link>runtimes/linux-x86/native/libTexture2DDecoderNative.so</Link>
+        </PackNativeLibrary>
+    </ItemGroup>
+</Project>

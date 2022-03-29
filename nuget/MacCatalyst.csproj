@@ -1,0 +1,7 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <ItemGroup>
+        <PackNativeLibrary Include="../install/apple-catalyst/lib/libTexture2DDecoderNative.dylib">
+            <Link>runtimes/maccatalyst/native/libTexture2DDecoderNative.dylib</Link>
+        </PackNativeLibrary>
+    </ItemGroup>
+</Project>

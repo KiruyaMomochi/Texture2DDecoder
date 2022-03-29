@@ -1,0 +1,67 @@
+<Project>
+    <PropertyGroup>
+        <PackageId>Kyaru.Texture2DDecoder.$(MSBuildProjectName)</PackageId>
+        <TargetFramework>netstandard1.0</TargetFramework>
+        <VersionPrefix>0.0.0</VersionPrefix>
+
+        <!-- https://github.com/NuGet/Home/issues/4254 -->
+        <NoWarn>$(NoWarn);NU5128</NoWarn>
+        <NoBuild>true</NoBuild>
+        <IncludeContentInPack>true</IncludeContentInPack>
+        <IncludeBuildOutput>false</IncludeBuildOutput>
+        <DisableImplicitFrameworkReferences>true</DisableImplicitFrameworkReferences>
+
+        <Title>Texture2DDecoder native ($(MSBuildProjectName))</Title>
+        <Description>
+            Native $(MSBuildProjectName) library for Texture2DDecoder. 
+            Still working in progress.
+            Not granted to work.
+        </Description>
+
+        <Authors>Kiruya Momochi</Authors>
+        <PackageProjectUrl>https://github.com/KiruyaMomochi/Texture2DDecoder</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/KiruyaMomochi/Texture2DDecoder</RepositoryUrl>
+        <PackageTags>unity;native;$(MSBuildProjectName.ToLower())</PackageTags>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    </PropertyGroup>
+
+    <ItemDefinitionGroup>
+        <PackNativeLibrary>
+            <Pack>true</Pack>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </PackNativeLibrary>
+    </ItemDefinitionGroup>
+
+    <ItemGroup>
+        <!-- Include ./Platform.props -->
+        <PackProjectFile Include=".\$(MSBuildProjectName).props">
+            <PackagePath>.\build\$(PackageId).props</PackagePath>
+        </PackProjectFile>
+        <PackProjectFile Include=".\$(MSBuildProjectName).targets">
+            <PackagePath>.\build\$(PackageId).targets</PackagePath>
+        </PackProjectFile>
+
+        <!-- Include ./TFM/Platform.props -->
+        <PackFrameworkProjectFile Include=".\$(MSBuildProjectName)\*\$(MSBuildProjectName).props">
+            <PackagePath>.\build\%(RecursiveDir)$(PackageId).props</PackagePath>
+        </PackFrameworkProjectFile>
+        <PackFrameworkProjectFile Include=".\$(MSBuildProjectName)\*\$(MSBuildProjectName).targets">
+            <PackagePath>.\build\%(RecursiveDir)$(PackageId).targets</PackagePath>
+        </PackFrameworkProjectFile>
+
+        <FrameworkDirectory Include="@(PackFrameworkProjectFile->'%(RecursiveDir)')">
+        </FrameworkDirectory>
+        <None Include="_._" Condition="'@(FrameworkDirectory)' != ''">
+            <PackagePath>lib\%(FrameworkDirectory.Identity)</PackagePath>
+            <Pack>true</Pack>
+            <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+        </None>
+    </ItemGroup>
+
+    <Target Name="EmitDebugMessage" BeforeTargets="Pack">
+        <Message Text="Tags $(PackageTags)" />
+        <Message Text="Content @(Content)" />
+        <Message Text="PackFrameworkProjectFile @(PackFrameworkProjectFile)" />
+        <Message Text="FrameworkDirectory @(FrameworkDirectory)" />
+    </Target>
+</Project>

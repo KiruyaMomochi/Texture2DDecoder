@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <ItemGroup>
+        <PackNativeLibrary Include="../install/windows-x86/bin/Texture2DDecoderNative.dll">
+            <Link>runtimes/win-x86/native/Texture2DDecoderNative.dll</Link>
+        </PackNativeLibrary>
+        <PackNativeLibrary Include="../install/windows-x64/bin/Texture2DDecoderNative.dll">
+            <Link>runtimes/win-x64/native/Texture2DDecoderNative.dll</Link>
+        </PackNativeLibrary>
+        <PackNativeLibrary Include="../install/windows-arm64/bin/Texture2DDecoderNative.dll">
+            <Link>runtimes/win-arm64/native/Texture2DDecoderNative.dll</Link>
+        </PackNativeLibrary>
+    </ItemGroup>
+</Project>

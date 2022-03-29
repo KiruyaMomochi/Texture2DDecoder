@@ -1,0 +1,7 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <ItemGroup>
+        <PackNativeLibrary Include="../install/browser-wasm/lib/libTexture2DDecoderNative.a">
+            <Link>runtimes/browser-wasm/native/Texture2DDecoderNative.a</Link>
+        </PackNativeLibrary>
+    </ItemGroup>
+</Project>

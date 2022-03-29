@@ -1,0 +1,51 @@
+name: Texture2DDecoderWrapper
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "Texture2DDecoderWrapper/**"
+      - '.github/workflows/build-wrapper.yml'
+
+env:
+  # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
+  BUILD_TYPE: Release
+  PROJECT_NAME: Texture2DDecoderWrapper
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ${{ github.workspace }}/${{ env.PROJECT_NAME }}
+        shell: pwsh
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 6.0.x
+      - name: Authenticate with nuget
+        run: dotnet nuget add source --username KiruyaMomochi --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/KiruyaMomochi/index.json"
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Build Texture2DDecoderWrapper
+        run: dotnet build --configuration ${{ env.BUILD_TYPE }} --no-restore
+
+      - name: Pack Texture2DDecoderWrapper
+        run: |
+          $Suffix = (Get-Date -UFormat "alpha.%s")
+          dotnet pack --configuration ${{ env.BUILD_TYPE }} --no-restore --output ${{ github.workspace }}/package --version-suffix $Suffix
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ env.PROJECT_NAME }}-NuGet
+          path: "${{ github.workspace }}/package"
+
+      - name: Publish nuget package
+        run: |
+          Get-ChildItem '${{ github.workspace }}/package/*.nupkg' | Foreach-Object { dotnet nuget push $_ --api-key "${{ secrets.GITHUB_TOKEN }}" --source github --skip-duplicate }

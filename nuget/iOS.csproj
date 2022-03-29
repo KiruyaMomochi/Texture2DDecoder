@@ -1,0 +1,7 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <ItemGroup>
+        <PackNativeLibrary Include="../install/apple-iOS/framework/Texture2DDecoderNative.framework/**">
+            <Link>runtimes/ios/Texture2DDecoderNative.framework/</Link>
+        </PackNativeLibrary>
+    </ItemGroup>
+</Project>
