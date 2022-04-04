@@ -5,7 +5,11 @@ Decodes Unity's Texture2D assets to image.
 The original code is from [Perfare/AssetStudio](https://github.com/Perfare/AssetStudio).
 This project adds `CMakeLists.txt` to allow building with `cmake` on other platforms.
 
-We provide binary releases as NuGet packages for the following platforms:
+The wrapper is provided as a NuGet package. 
+
+[![Wrapper Package](https://img.shields.io/nuget/dt/Kyaru.Texture2DDecoder?color=9e4edf&label=Kyaru.Texture2DDecoder&logo=nuget&logoColor=white)](https://www.nuget.org/packages/Kyaru.Texture2DDecoder/)
+
+We also provide native library package for the following platforms:
 
 |Platform|NuGet Package|
 |---|---|
@@ -20,7 +24,3 @@ We provide binary releases as NuGet packages for the following platforms:
 \* iOS: only tested on simulator, not granted to work.
 
 For how this package is built, and other details, see our [wiki](https://github.com/KiruyaMomochi/Texture2DDecoder/wiki).
-
-## Install .NET MAUI
-
-`dotnet workload` may not give you the last version. Use [dotnet/maui/DEVELOPMENT.md](https://github.com/dotnet/maui/blob/main/.github/DEVELOPMENT.md#net-maui-workload) to install it. ([Reference](https://github.com/dotnet/maui/issues/5356))

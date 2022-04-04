@@ -16,9 +16,19 @@
     <RepositoryUrl>https://github.com/KiruyaMomochi/Texture2DDecoder</RepositoryUrl>
     <PackageTags>unity</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Title>Texture2DDecoder</Title>
+    <Description>
+            Decodes Unity's Texture2D assets to image.
+    </Description>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 
   <ItemGroup>
     <None Include="../LICENSE" Pack="true" PackagePath=""/>
+    <None Include="../README.md">
+      <PackagePath>./</PackagePath>
+      <Pack>true</Pack>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>

@@ -11,11 +11,9 @@
         <IncludeBuildOutput>false</IncludeBuildOutput>
         <DisableImplicitFrameworkReferences>true</DisableImplicitFrameworkReferences>
 
-        <Title>Texture2DDecoder native ($(MSBuildProjectName))</Title>
+        <Title>Texture2DDecoder $(MSBuildProjectName) Native</Title>
         <Description>
-            Native $(MSBuildProjectName) library for Texture2DDecoder. 
-            Still working in progress.
-            Not granted to work.
+            $(MSBuildProjectName) Native library for Texture2DDecoder. 
         </Description>
 
         <Authors>Kiruya Momochi</Authors>
@@ -23,6 +21,7 @@
         <RepositoryUrl>https://github.com/KiruyaMomochi/Texture2DDecoder</RepositoryUrl>
         <PackageTags>unity;native;$(MSBuildProjectName.ToLower())</PackageTags>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
     </PropertyGroup>
 
     <ItemDefinitionGroup>
@@ -53,6 +52,12 @@
         </FrameworkDirectory>
         <None Include="_._" Condition="'@(FrameworkDirectory)' != ''">
             <PackagePath>lib\%(FrameworkDirectory.Identity)</PackagePath>
+            <Pack>true</Pack>
+            <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+        </None>
+        <None Include="..\LICENSE" Pack="true" PackagePath=""/>
+        <None Include="..\README.md">
+            <PackagePath>.\</PackagePath>
             <Pack>true</Pack>
             <CopyToOutputDirectory>Never</CopyToOutputDirectory>
         </None>
