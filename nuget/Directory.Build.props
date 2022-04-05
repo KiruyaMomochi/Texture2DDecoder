@@ -2,7 +2,7 @@
     <PropertyGroup>
         <PackageId>Kyaru.Texture2DDecoder.$(MSBuildProjectName)</PackageId>
         <TargetFramework>netstandard1.0</TargetFramework>
-        <VersionPrefix>0.0.0</VersionPrefix>
+        <VersionPrefix>0.1.0</VersionPrefix>
 
         <!-- https://github.com/NuGet/Home/issues/4254 -->
         <NoWarn>$(NoWarn);NU5128</NoWarn>

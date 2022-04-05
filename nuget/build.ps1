@@ -6,8 +6,8 @@ param (
     $OutputDir = "package",
     [Parameter()]
     [ValidateScript({
-        Get-ChildItem .\nuget\*.csproj | ForEach-Object BaseName
-    })]
+            Get-ChildItem .\nuget\*.csproj | ForEach-Object BaseName
+        })]
     [string[]]
     $Variants = (Get-ChildItem .\nuget\*.csproj | ForEach-Object BaseName),
     [Parameter()]
@@ -22,7 +22,7 @@ param (
 )
 
 $null = New-Item -ItemType Directory -Force -Path $OutputDir
-$outputs = $Variants | ForEach-Object {Join-Path $OutputDir Kyaru.Texture2DDecoder.$_.*.nupkg}
+$outputs = $Variants | ForEach-Object { Join-Path $OutputDir Kyaru.Texture2DDecoder.$_.*.nupkg }
 
 Write-Output ($PSStyle.Foreground.Cyan + "Building $Variants" + $PSStyle.Reset)
 
@@ -33,7 +33,12 @@ foreach ($output in $outputs) {
 
 # Build packages
 foreach ($variant in $Variants) {
-    dotnet pack (Join-Path $PSScriptRoot "$variant.csproj") --version-suffix $Suffix --configuration Release --output package
+    if ($Suffix) {
+        dotnet pack (Join-Path $PSScriptRoot "$variant.csproj") --version-suffix $Suffix --configuration Release --output package
+    }
+    else {
+        dotnet pack (Join-Path $PSScriptRoot "$variant.csproj") --configuration Release --output package
+    }
 }
 
 # Push packages
