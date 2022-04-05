@@ -4,8 +4,6 @@
     <TargetFrameworks>net5.0</TargetFrameworks>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <VersionPrefix>0.16.40</VersionPrefix>
-    <AssemblyVersion>0.16.0.0</AssemblyVersion>
-    <FileVersion>0.16.0.0</FileVersion>
     <Copyright>Copyright © Kiruya Momochi 2020-2022; Copyright © Perfare 2020-2022; Copyright © hozuki 2020</Copyright>
     <DebugType>embedded</DebugType>
   </PropertyGroup>
@@ -14,6 +12,7 @@
     <PackageId>Kyaru.Texture2DDecoder</PackageId>
     <PackageProjectUrl>https://github.com/KiruyaMomochi/Texture2DDecoder</PackageProjectUrl>
     <RepositoryUrl>https://github.com/KiruyaMomochi/Texture2DDecoder</RepositoryUrl>
+    <RepositoryType>git</RepositoryType> 
     <PackageTags>unity</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Title>Texture2DDecoder</Title>
@@ -21,7 +20,14 @@
             Decodes Unity's Texture2D assets to image.
     </Description>
     <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <IncludeSymbols>true</IncludeSymbols>
   </PropertyGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All"/>
+  </ItemGroup>
 
   <ItemGroup>
     <None Include="../LICENSE" Pack="true" PackagePath=""/>
