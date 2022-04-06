@@ -17,7 +17,7 @@
     <PropertyGroup>
         <Title>$(LibraryName) $(MSBuildProjectName) Native</Title>
         <Description>
-            $(MSBuildProjectName) Native library for $(LibraryName). 
+            $(MSBuildProjectName) Native library for $(LibraryName).
         </Description>
 
         <PackageId>Kyaru.$(LibraryName).$(MSBuildProjectName)</PackageId>
@@ -57,7 +57,7 @@
 
         <FrameworkDirectory Include="@(PackFrameworkProjectFile->'%(RecursiveDir)')">
         </FrameworkDirectory>
-        <None Include="_._" Condition="'@(FrameworkDirectory)' != ''">
+        <None Include="$(MSBuildThisFileDirectory)_._" Condition="'@(FrameworkDirectory)' != ''">
             <PackagePath>lib\%(FrameworkDirectory.Identity)</PackagePath>
             <Pack>true</Pack>
             <CopyToOutputDirectory>Never</CopyToOutputDirectory>
