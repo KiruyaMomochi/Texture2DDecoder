@@ -12,7 +12,5 @@
         <PackNativeLibrary Include="../install/android-armeabi-v7a/lib/libTexture2DDecoderNative.so">
             <Link>runtimes/android-arm/native/libTexture2DDecoderNative.so</Link>
         </PackNativeLibrary>
-        <PackNativeProjectFile Include="./Kyaru.Texture2DDecoder.Android.targets">
-        </PackNativeProjectFile>
     </ItemGroup>
 </Project>

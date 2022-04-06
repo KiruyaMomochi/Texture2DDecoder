@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project>
     <ItemGroup>
-        <NativeFileReference Include="$(MSBuildThisFileDirectory)/../runtimes/browser-wasm/native/Texture2DDecoderNative.a" />
+        <NativeFileReference Include="$(MSBuildThisFileDirectory)/../runtimes/browser-wasm/native/*.o" />
+        <NativeFileReference Include="$(MSBuildThisFileDirectory)/../runtimes/browser-wasm/native/*.a" />
+        <NativeFileReference Include="$(MSBuildThisFileDirectory)/../runtimes/browser-wasm/native/*.bc" />
+        <NativeFileReference Include="$(MSBuildThisFileDirectory)/../runtimes/browser-wasm/native/*.wasm" />
     </ItemGroup>
 </Project>

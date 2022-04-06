@@ -1,8 +1,27 @@
 <Project>
     <PropertyGroup>
-        <PackageId>Kyaru.Texture2DDecoder.$(MSBuildProjectName)</PackageId>
-        <TargetFramework>netstandard1.0</TargetFramework>
+        <LibraryName>Texture2DDecoder</LibraryName>
+        <Authors>Kiruya Momochi</Authors>
+        <PackageTags>unity;native;$(MSBuildProjectName.ToLower())</PackageTags>
+        <PackageProjectUrl>https://github.com/KiruyaMomochi/Texture2DDecoder</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/KiruyaMomochi/Texture2DDecoder</RepositoryUrl>
         <VersionPrefix>0.1.0</VersionPrefix>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="..\README.md" Pack="true" PackagePath=""/>
+    </ItemGroup>
+
+    <PropertyGroup>
+        <Title>$(LibraryName) $(MSBuildProjectName) Native</Title>
+        <Description>
+            $(MSBuildProjectName) Native library for $(LibraryName). 
+        </Description>
+
+        <PackageId>Kyaru.$(LibraryName).$(MSBuildProjectName)</PackageId>
+        <TargetFramework>netstandard1.0</TargetFramework>
 
         <!-- https://github.com/NuGet/Home/issues/4254 -->
         <NoWarn>$(NoWarn);NU5128</NoWarn>
@@ -10,18 +29,6 @@
         <IncludeContentInPack>true</IncludeContentInPack>
         <IncludeBuildOutput>false</IncludeBuildOutput>
         <DisableImplicitFrameworkReferences>true</DisableImplicitFrameworkReferences>
-
-        <Title>Texture2DDecoder $(MSBuildProjectName) Native</Title>
-        <Description>
-            $(MSBuildProjectName) Native library for Texture2DDecoder. 
-        </Description>
-
-        <Authors>Kiruya Momochi</Authors>
-        <PackageProjectUrl>https://github.com/KiruyaMomochi/Texture2DDecoder</PackageProjectUrl>
-        <RepositoryUrl>https://github.com/KiruyaMomochi/Texture2DDecoder</RepositoryUrl>
-        <PackageTags>unity;native;$(MSBuildProjectName.ToLower())</PackageTags>
-        <PackageLicenseExpression>MIT</PackageLicenseExpression>
-        <PackageReadmeFile>README.md</PackageReadmeFile>
     </PropertyGroup>
 
     <ItemDefinitionGroup>
@@ -55,16 +62,11 @@
             <Pack>true</Pack>
             <CopyToOutputDirectory>Never</CopyToOutputDirectory>
         </None>
-        <None Include="..\LICENSE" Pack="true" PackagePath=""/>
-        <None Include="..\README.md">
-            <PackagePath>.\</PackagePath>
-            <Pack>true</Pack>
-            <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-        </None>
     </ItemGroup>
 
     <Target Name="EmitDebugMessage" BeforeTargets="Pack">
         <Message Text="Tags $(PackageTags)" />
+        <Message Text="None @(None)" />
         <Message Text="Content @(Content)" />
         <Message Text="PackFrameworkProjectFile @(PackFrameworkProjectFile)" />
         <Message Text="FrameworkDirectory @(FrameworkDirectory)" />
