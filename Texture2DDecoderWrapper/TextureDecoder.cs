@@ -17,7 +17,7 @@ namespace Texture2DDecoder
 #endif
         }
 
-        public static bool DecodeDXT1(byte[] data, int width, int height, byte[] image)
+        public static bool DecodeDXT1(ReadOnlySpan<byte> data, int width, int height, Span<byte> image)
         {
             fixed (byte* pData = data)
             {
@@ -28,7 +28,7 @@ namespace Texture2DDecoder
             }
         }
 
-        public static bool DecodeDXT5(byte[] data, int width, int height, byte[] image)
+        public static bool DecodeDXT5(ReadOnlySpan<byte> data, int width, int height, Span<byte> image)
         {
             fixed (byte* pData = data)
             {
@@ -39,7 +39,7 @@ namespace Texture2DDecoder
             }
         }
 
-        public static bool DecodePVRTC(byte[] data, int width, int height, byte[] image, bool is2bpp)
+        public static bool DecodePVRTC(ReadOnlySpan<byte> data, int width, int height, Span<byte> image, bool is2bpp)
         {
             fixed (byte* pData = data)
             {
@@ -50,7 +50,7 @@ namespace Texture2DDecoder
             }
         }
 
-        public static bool DecodeETC1(byte[] data, int width, int height, byte[] image)
+        public static bool DecodeETC1(ReadOnlySpan<byte> data, int width, int height, Span<byte> image)
         {
             fixed (byte* pData = data)
             {
@@ -61,7 +61,7 @@ namespace Texture2DDecoder
             }
         }
 
-        public static bool DecodeETC2(byte[] data, int width, int height, byte[] image)
+        public static bool DecodeETC2(ReadOnlySpan<byte> data, int width, int height, Span<byte> image)
         {
             fixed (byte* pData = data)
             {
@@ -72,7 +72,7 @@ namespace Texture2DDecoder
             }
         }
 
-        public static bool DecodeETC2A1(byte[] data, int width, int height, byte[] image)
+        public static bool DecodeETC2A1(ReadOnlySpan<byte> data, int width, int height, Span<byte> image)
         {
             fixed (byte* pData = data)
             {
@@ -83,7 +83,7 @@ namespace Texture2DDecoder
             }
         }
 
-        public static bool DecodeETC2A8(byte[] data, int width, int height, byte[] image)
+        public static bool DecodeETC2A8(ReadOnlySpan<byte> data, int width, int height, Span<byte> image)
         {
             fixed (byte* pData = data)
             {
@@ -94,7 +94,7 @@ namespace Texture2DDecoder
             }
         }
 
-        public static bool DecodeEACR(byte[] data, int width, int height, byte[] image)
+        public static bool DecodeEACR(ReadOnlySpan<byte> data, int width, int height, Span<byte> image)
         {
             fixed (byte* pData = data)
             {
@@ -105,7 +105,7 @@ namespace Texture2DDecoder
             }
         }
 
-        public static bool DecodeEACRSigned(byte[] data, int width, int height, byte[] image)
+        public static bool DecodeEACRSigned(ReadOnlySpan<byte> data, int width, int height, Span<byte> image)
         {
             fixed (byte* pData = data)
             {
@@ -116,7 +116,7 @@ namespace Texture2DDecoder
             }
         }
 
-        public static bool DecodeEACRG(byte[] data, int width, int height, byte[] image)
+        public static bool DecodeEACRG(ReadOnlySpan<byte> data, int width, int height, Span<byte> image)
         {
             fixed (byte* pData = data)
             {
@@ -127,7 +127,7 @@ namespace Texture2DDecoder
             }
         }
 
-        public static bool DecodeEACRGSigned(byte[] data, int width, int height, byte[] image)
+        public static bool DecodeEACRGSigned(ReadOnlySpan<byte> data, int width, int height, Span<byte> image)
         {
             fixed (byte* pData = data)
             {
@@ -138,7 +138,7 @@ namespace Texture2DDecoder
             }
         }
 
-        public static bool DecodeBC4(byte[] data, int width, int height, byte[] image)
+        public static bool DecodeBC4(ReadOnlySpan<byte> data, int width, int height, Span<byte> image)
         {
             fixed (byte* pData = data)
             {
@@ -149,7 +149,7 @@ namespace Texture2DDecoder
             }
         }
 
-        public static bool DecodeBC5(byte[] data, int width, int height, byte[] image)
+        public static bool DecodeBC5(ReadOnlySpan<byte> data, int width, int height, Span<byte> image)
         {
             fixed (byte* pData = data)
             {
@@ -160,7 +160,7 @@ namespace Texture2DDecoder
             }
         }
 
-        public static bool DecodeBC6(byte[] data, int width, int height, byte[] image)
+        public static bool DecodeBC6(ReadOnlySpan<byte> data, int width, int height, Span<byte> image)
         {
             fixed (byte* pData = data)
             {
@@ -171,7 +171,7 @@ namespace Texture2DDecoder
             }
         }
 
-        public static bool DecodeBC7(byte[] data, int width, int height, byte[] image)
+        public static bool DecodeBC7(ReadOnlySpan<byte> data, int width, int height, Span<byte> image)
         {
             fixed (byte* pData = data)
             {
@@ -182,7 +182,7 @@ namespace Texture2DDecoder
             }
         }
 
-        public static bool DecodeATCRGB4(byte[] data, int width, int height, byte[] image)
+        public static bool DecodeATCRGB4(ReadOnlySpan<byte> data, int width, int height, Span<byte> image)
         {
             fixed (byte* pData = data)
             {
@@ -193,7 +193,7 @@ namespace Texture2DDecoder
             }
         }
 
-        public static bool DecodeATCRGBA8(byte[] data, int width, int height, byte[] image)
+        public static bool DecodeATCRGBA8(ReadOnlySpan<byte> data, int width, int height, Span<byte> image)
         {
             fixed (byte* pData = data)
             {
@@ -204,7 +204,7 @@ namespace Texture2DDecoder
             }
         }
 
-        public static bool DecodeASTC(byte[] data, int width, int height, int blockWidth, int blockHeight, byte[] image)
+        public static bool DecodeASTC(ReadOnlySpan<byte> data, int width, int height, int blockWidth, int blockHeight, Span<byte> image)
         {
             fixed (byte* pData = data)
             {
@@ -215,7 +215,7 @@ namespace Texture2DDecoder
             }
         }
 
-        public static byte[] UnpackCrunch(byte[] data)
+        public static byte[] UnpackCrunch(ReadOnlySpan<byte> data)
         {
             void* pBuffer;
             uint bufferSize;
@@ -239,7 +239,7 @@ namespace Texture2DDecoder
             return result;
         }
 
-        public static byte[] UnpackUnityCrunch(byte[] data)
+        public static byte[] UnpackUnityCrunch(ReadOnlySpan<byte> data)
         {
             void* pBuffer;
             uint bufferSize;
