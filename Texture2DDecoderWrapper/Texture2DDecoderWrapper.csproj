@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFrameworks>net5.0</TargetFrameworks>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <VersionPrefix>0.16.40</VersionPrefix>
+    <VersionPrefix>0.17.0</VersionPrefix>
     <Copyright>Copyright © Kiruya Momochi 2020-2022; Copyright © Perfare 2020-2022; Copyright © hozuki 2020</Copyright>
     <DebugType>embedded</DebugType>
   </PropertyGroup>
