@@ -50,13 +50,14 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Install multilib
+      - name: Install gcc libraries
         if: runner.os == 'Linux'
         run: |
           sudo dpkg --add-architecture i386
           sudo apt update
           sudo apt install -yq gcc-multilib g++-multilib
-
+          sudo apt install -yq gcc-aarch64-linux-gnu g++-aarch64-linux-gnu gcc-13-aarch64-linux-gnu g++-13-aarch64-linux-gnu
+      
       - name: Install Ninja
         run: |
           sudo apt install -yq ninja-build
@@ -64,13 +65,13 @@ jobs:
       - name: Configure and Build
         run: |
           Import-Module (Join-Path '${{ github.workspace }}' cmake 'cmake-helper.psm1')
-          Invoke-CMakeNativeBatchBuild ${{ env.PROJECT_NAME }} ./build/linux -Architectures x86, x64
+          Invoke-CMakeNativeBatchBuild ${{ env.PROJECT_NAME }} ./build/linux -Architectures x86, x64, arm64
           Invoke-CMakeAndroidBatchBuild ${{ env.PROJECT_NAME }} ./build/android -Generator Ninja -AndroidAbis armeabi-v7a, arm64-v8a, x86, x86_64 -NdkHome $env:ANDROID_NDK_LATEST_HOME -NdkToolchain
 
       - name: Install
         run: |
           Import-Module (Join-Path '${{ github.workspace }}' cmake 'cmake-helper.psm1')
-          Invoke-CMakeNativeBatchInstall ./build/linux ./install/linux -Architectures x86, x64
+          Invoke-CMakeNativeBatchInstall ./build/linux ./install/linux -Architectures x86, x64, arm64
           Invoke-CMakeAndroidBatchInstall ./build/android ./install/android -AndroidAbis armeabi-v7a, arm64-v8a, x86, x86_64
 
       - name: Upload artifact

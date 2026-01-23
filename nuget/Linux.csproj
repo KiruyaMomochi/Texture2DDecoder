@@ -6,5 +6,8 @@
         <PackNativeLibrary Include="../install/linux-x86/lib/libTexture2DDecoderNative.so">
             <Link>runtimes/linux-x86/native/libTexture2DDecoderNative.so</Link>
         </PackNativeLibrary>
+        <PackNativeLibrary Include="../install/linux-arm64/lib/libTexture2DDecoderNative.so">
+            <Link>runtimes/linux-arm64/native/libTexture2DDecoderNative.so</Link>
+        </PackNativeLibrary>
     </ItemGroup>
 </Project>
