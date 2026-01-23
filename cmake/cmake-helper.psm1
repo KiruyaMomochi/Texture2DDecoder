@@ -58,13 +58,13 @@ function Get-CMakeNativeArgs {
         ([TargetSystem]::MacOS) {
             switch ($architecture) {
                 'x64' {
-                    '-D', 'CMAKE_OSX_ARCHITECTURES="x86_64"'
+                    '-D', 'CMAKE_OSX_ARCHITECTURES=x86_64'
                 }
                 'arm64' {
-                    '-D', 'CMAKE_OSX_ARCHITECTURES="arm64"'
+                    '-D', 'CMAKE_OSX_ARCHITECTURES=arm64'
                 }
                 'universal' {
-                    '-D', 'CMAKE_OSX_ARCHITECTURES="x86_64;arm64"'
+                    '-D', 'CMAKE_OSX_ARCHITECTURES=x86_64;arm64'
                 }
                 default {
                     throw "Unsupported architecture: $architecture for $TargetSystem"

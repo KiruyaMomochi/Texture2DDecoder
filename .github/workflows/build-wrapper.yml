@@ -41,7 +41,7 @@ jobs:
           dotnet pack --configuration ${{ env.BUILD_TYPE }} --no-restore --output ${{ github.workspace }}/package --version-suffix $Suffix
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ env.PROJECT_NAME }}-NuGet
           path: "${{ github.workspace }}/package"

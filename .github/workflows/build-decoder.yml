@@ -38,7 +38,7 @@ jobs:
           Invoke-CMakeNativeBatchInstall ./build/windows ./install/windows -Architectures x86,x64,arm64
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ env.PROJECT_NAME }}-${{ runner.os }}-${{ env.BUILD_TYPE }}
           path: ${{ github.workspace }}/install/**
@@ -74,7 +74,7 @@ jobs:
           Invoke-CMakeAndroidBatchInstall ./build/android ./install/android -AndroidAbis armeabi-v7a, arm64-v8a, x86, x86_64
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ env.PROJECT_NAME }}-${{ runner.os }}-${{ env.BUILD_TYPE }}
           path: ${{ github.workspace }}/install/**
@@ -107,7 +107,7 @@ jobs:
           Invoke-CMakeAppleBatchInstall ./build/apple ./install/apple -Platforms MAC_CATALYST,MAC_CATALYST_ARM64 -Merge catalyst
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ env.PROJECT_NAME }}-${{ runner.os }}-${{ env.BUILD_TYPE }}
           path: ${{ github.workspace }}/install/**
@@ -145,7 +145,7 @@ jobs:
           Invoke-CMakeInstall ./build/browser-wasm ./install/browser-wasm
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ env.PROJECT_NAME }}-wasm-${{ env.BUILD_TYPE }}
           path: ${{ github.workspace }}/install/**
@@ -168,7 +168,7 @@ jobs:
         run: dotnet nuget add source --username KiruyaMomochi --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/KiruyaMomochi/index.json"
 
       - name: Download all workflow run artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
 
       - name: Copy dlls to install
         run: |
@@ -179,7 +179,7 @@ jobs:
           find . -type f -exec file '{}' ';'
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ env.PROJECT_NAME }}-${{ env.BUILD_TYPE }}
           path: ${{ github.workspace }}/install/**
@@ -188,7 +188,7 @@ jobs:
         run: nuget/build.ps1 -OutputDir ${{ github.workspace }}/package
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ env.PROJECT_NAME }}-NuGet
           path: "${{ github.workspace }}/package"
