@@ -182,7 +182,7 @@ jobs:
           find . -type f -exec file '{}' ';'
 
       - name: Build nuget package (no suffix for release)
-        run: nuget/build.ps1 -OutputDir ${{ github.workspace }}/package
+        run: nuget/build.ps1 -OutputDir ${{ github.workspace }}/package -Suffix ""
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
