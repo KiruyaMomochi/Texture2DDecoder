@@ -5,7 +5,7 @@
         <PackageTags>unity;native;$(MSBuildProjectName.ToLower())</PackageTags>
         <PackageProjectUrl>https://github.com/KiruyaMomochi/Texture2DDecoder</PackageProjectUrl>
         <RepositoryUrl>https://github.com/KiruyaMomochi/Texture2DDecoder</RepositoryUrl>
-        <VersionPrefix>0.1.0</VersionPrefix>
+        <VersionPrefix>0.2.0</VersionPrefix>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PackageReadmeFile>README.md</PackageReadmeFile>
     </PropertyGroup>
